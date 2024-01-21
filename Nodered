@@ -1,0 +1,554 @@
+[
+    {
+        "id": "91543a0fd8a263e6",
+        "type": "tab",
+        "label": "TempHum CSV",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a87c140ad24bc840",
+        "type": "serial in",
+        "z": "91543a0fd8a263e6",
+        "name": "",
+        "serial": "dcc70fddce5b2c0b",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "5b67d01127761e62",
+                "6ecdec49a96343a1"
+            ]
+        ]
+    },
+    {
+        "id": "4a6062fd64d4d75e",
+        "type": "ui_text",
+        "z": "91543a0fd8a263e6",
+        "group": "5897ae3fb180bd8d",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperatura",
+        "format": "{{msg.payload  | number:1 }} °C",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 730,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6451aa3ab3fcf39f",
+        "type": "ui_chart",
+        "z": "91543a0fd8a263e6",
+        "name": "",
+        "group": "6671586b155f1ade",
+        "order": 2,
+        "width": "15",
+        "height": "6",
+        "label": "Temperatura y Humedad",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "5",
+        "removeOlderPoints": "30",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#53ff64",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 770,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3ed25d75b225e6b0",
+        "type": "moving-average",
+        "z": "91543a0fd8a263e6",
+        "name": "Hum average",
+        "amount": 10,
+        "weight": "cumulative",
+        "x": 440,
+        "y": 300,
+        "wires": [
+            [
+                "ed7f310a5fa5acbe"
+            ]
+        ]
+    },
+    {
+        "id": "9f129950727594cd",
+        "type": "inject",
+        "z": "91543a0fd8a263e6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "clear",
+        "payloadType": "str",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "3ed25d75b225e6b0",
+                "7b5b522e6bfcb8e9"
+            ]
+        ]
+    },
+    {
+        "id": "c2fc3252a0a1df9a",
+        "type": "inject",
+        "z": "91543a0fd8a263e6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "count",
+        "payloadType": "str",
+        "x": 210,
+        "y": 320,
+        "wires": [
+            [
+                "3ed25d75b225e6b0",
+                "7b5b522e6bfcb8e9"
+            ]
+        ]
+    },
+    {
+        "id": "5d1baa6e7d738ece",
+        "type": "inject",
+        "z": "91543a0fd8a263e6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "get",
+        "payloadType": "str",
+        "x": 210,
+        "y": 360,
+        "wires": [
+            [
+                "3ed25d75b225e6b0",
+                "7b5b522e6bfcb8e9"
+            ]
+        ]
+    },
+    {
+        "id": "5b67d01127761e62",
+        "type": "function",
+        "z": "91543a0fd8a263e6",
+        "name": "RemoveNL",
+        "func": "msg.payload = msg.payload.trim();\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 100,
+        "wires": [
+            [
+                "98237e6a567b8529",
+                "02d2070b1629bd6f"
+            ]
+        ]
+    },
+    {
+        "id": "ed7f310a5fa5acbe",
+        "type": "ui_text",
+        "z": "91543a0fd8a263e6",
+        "group": "e9d8c656ca2e61bd",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Humedad",
+        "format": "{{msg.payload | number:1 }} %",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 640,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "8205c6fd9ac9a0fd",
+        "type": "csv",
+        "z": "91543a0fd8a263e6",
+        "name": "",
+        "sep": "\\t",
+        "hdrin": "",
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "hum, temp",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 850,
+        "y": 140,
+        "wires": [
+            [
+                "cf503c44d3eb1e20",
+                "dccc1da9e38a43a1"
+            ]
+        ]
+    },
+    {
+        "id": "cf503c44d3eb1e20",
+        "type": "file",
+        "z": "91543a0fd8a263e6",
+        "name": "",
+        "filename": "test1.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1000,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6ecdec49a96343a1",
+        "type": "debug",
+        "z": "91543a0fd8a263e6",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "98237e6a567b8529",
+        "type": "debug",
+        "z": "91543a0fd8a263e6",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "02d2070b1629bd6f",
+        "type": "function",
+        "z": "91543a0fd8a263e6",
+        "name": "SplitConvert",
+        "func": "var data=msg.payload;\nvar temp=data.split(\",\");\nvar msg1={};\nvar msg2={};\nvar msg3={};\n\nmsg1.topic= \"Humedad\";\nmsg1.payload=Number(temp[0]);\n\nmsg2.topic= \"Temperature\";\nmsg2.payload=Number(temp[1]);\n\n\nreturn [msg1,msg2];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 100,
+        "wires": [
+            [
+                "e496318a996c826a",
+                "6451aa3ab3fcf39f",
+                "63efac59d8ab93f6",
+                "3ed25d75b225e6b0",
+                "1b9d82c44472dedd"
+            ],
+            [
+                "8d4becf62f584697",
+                "6451aa3ab3fcf39f",
+                "63efac59d8ab93f6",
+                "7b5b522e6bfcb8e9",
+                "4a6062fd64d4d75e"
+            ]
+        ]
+    },
+    {
+        "id": "e496318a996c826a",
+        "type": "debug",
+        "z": "91543a0fd8a263e6",
+        "name": "Humedad",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8d4becf62f584697",
+        "type": "debug",
+        "z": "91543a0fd8a263e6",
+        "name": "Temperatura",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "dccc1da9e38a43a1",
+        "type": "debug",
+        "z": "91543a0fd8a263e6",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "63efac59d8ab93f6",
+        "type": "join",
+        "z": "91543a0fd8a263e6",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 710,
+        "y": 140,
+        "wires": [
+            [
+                "a97075c3598c8f75",
+                "8205c6fd9ac9a0fd"
+            ]
+        ]
+    },
+    {
+        "id": "a97075c3598c8f75",
+        "type": "debug",
+        "z": "91543a0fd8a263e6",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7b5b522e6bfcb8e9",
+        "type": "moving-average",
+        "z": "91543a0fd8a263e6",
+        "name": "Temp average",
+        "amount": 10,
+        "weight": "cumulative",
+        "x": 440,
+        "y": 360,
+        "wires": [
+            [
+                "86621b7f03722f37"
+            ]
+        ]
+    },
+    {
+        "id": "86621b7f03722f37",
+        "type": "ui_text",
+        "z": "91543a0fd8a263e6",
+        "group": "e9d8c656ca2e61bd",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperatura",
+        "format": "{{msg.payload | number:1}} °C",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 650,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "1b9d82c44472dedd",
+        "type": "ui_text",
+        "z": "91543a0fd8a263e6",
+        "group": "5897ae3fb180bd8d",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "name": "",
+        "label": "Humedad",
+        "format": "{{msg.payload  | number:1}} %",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 720,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "dcc70fddce5b2c0b",
+        "type": "serial-port",
+        "name": "Arduino",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "5897ae3fb180bd8d",
+        "type": "ui_group",
+        "name": "Valores actuales",
+        "tab": "4f6d060f4e925f38",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6671586b155f1ade",
+        "type": "ui_group",
+        "name": "Temperatura y humedad",
+        "tab": "4f6d060f4e925f38",
+        "order": 1,
+        "disp": true,
+        "width": "15",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e9d8c656ca2e61bd",
+        "type": "ui_group",
+        "name": "Promedio",
+        "tab": "4f6d060f4e925f38",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4f6d060f4e925f38",
+        "type": "ui_tab",
+        "name": "Invernadero",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
