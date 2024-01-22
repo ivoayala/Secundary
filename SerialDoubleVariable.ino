@@ -1,5 +1,8 @@
-  float counter1=0;
-  float counter2=0;
+const unsigned long SECONDS = 1000;
+const unsigned long MINUTES = 60 * SECONDS;
+const unsigned long SampleTime = 10 * MINUTES;
+float counter1=0;
+float counter2=0;
 
 void setup()
 {
@@ -15,7 +18,7 @@ void loop()
   Serial.println(counter2,1);
   counter1 +=1.1;
   counter2 +=1.3;
-  delay(10000);  // delay in between reads for stability
+  delay(SampleTime);  // delay in between reads for stability
 
 }
 // -- END OF FILE --
